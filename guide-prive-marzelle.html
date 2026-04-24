@@ -22,6 +22,12 @@
             --gold: #c5a447;
             --text: #4a4540;
             --text-light: #8e857d;
+            
+            /* Nuances par catégories */
+            --cat-blue: #5d7a8c;
+            --cat-green: #5a7065;
+            --cat-red: #a66d5b;
+            --cat-gold: #b38b40;
         }
 
         body { font-family: 'Lato', sans-serif; background: var(--cream-bg); color: var(--text); margin: 0; padding: 0; line-height: 1.6; }
@@ -46,9 +52,30 @@
             box-shadow: 0 8px 25px rgba(122, 107, 92, 0.1); 
             overflow: hidden;
             border: 1px solid rgba(214, 204, 186, 0.3);
+            border-left: 6px solid var(--stone);
         }
 
-        h2 { font-family: 'Playfair Display', serif; color: var(--sage-green); margin-top: 0; border-bottom: 2px solid var(--stone-light); padding-bottom: 10px; font-size: 1.4rem; text-transform: uppercase; }
+        /* --- Couleurs par catégories --- */
+        .card-arrival { border-left-color: var(--cat-blue); }
+        .card-arrival h2 { color: var(--cat-blue); }
+        .card-arrival .btn { border-color: #d1dbe1; color: var(--cat-blue); }
+        .card-arrival .btn:hover { background: var(--cat-blue); color: white; border-color: var(--cat-blue); }
+
+        .card-home { border-left-color: var(--cat-green); }
+        .card-home h2 { color: var(--cat-green); }
+        /* Pas de boutons ici mais prêt au cas où */
+
+        .card-food { border-left-color: var(--cat-red); }
+        .card-food h2 { color: var(--cat-red); }
+        .card-food .btn { border-color: #e2d2cd; color: var(--cat-red); }
+        .card-food .btn:hover { background: var(--cat-red); color: white; border-color: var(--cat-red); }
+
+        .card-leisure { border-left-color: var(--cat-gold); }
+        .card-leisure h2 { color: var(--cat-gold); }
+        .card-leisure .btn { border-color: #e9dec8; color: var(--cat-gold); }
+        .card-leisure .btn:hover { background: var(--cat-gold); color: white; border-color: var(--cat-gold); }
+
+        h2 { font-family: 'Playfair Display', serif; margin-top: 0; border-bottom: 2px solid var(--stone-light); padding-bottom: 10px; font-size: 1.4rem; text-transform: uppercase; }
         h3 { color: var(--stone-dark); font-size: 1.1rem; margin-top: 25px; border-left: 3px solid var(--gold); padding-left: 10px; text-transform: uppercase; letter-spacing: 1px; }
         
         .wifi-box { 
@@ -65,7 +92,6 @@
             align-items: center; 
             justify-content: center; 
             background: white; 
-            color: var(--sage-green); 
             padding: 14px 20px; 
             text-decoration: none; 
             border-radius: 8px; 
@@ -73,10 +99,10 @@
             width: 100%; 
             box-sizing: border-box; 
             transition: all 0.3s; 
-            border: 1px solid var(--stone);
+            border: 1px solid;
             font-weight: bold;
         }
-        .btn:hover { background: var(--sage-green); color: white; transform: translateY(-2px); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         
         .parking-map-container {
             margin-top: 20px;
@@ -92,7 +118,7 @@
         
         .agenda-box { background: var(--stone-light); padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid var(--gold); }
         
-        .card-depart { background: var(--dark-accent); color: white; text-align: center; padding: 40px 25px; }
+        .card-depart { background: var(--dark-accent); color: white; text-align: center; padding: 40px 25px; border-left: none; }
         .card-depart h2 { color: var(--gold); border-color: rgba(255,255,255,0.1); }
         .card-depart p { color: rgba(255,255,255,0.8); }
 
@@ -108,7 +134,7 @@
 
 <div class="container">
 
-    <div class="card">
+    <div class="card card-arrival">
         <h2><i class="fas fa-key"></i> Arrivée & Wifi</h2>
         <p>L'accès à l'appartement se fait par le petit portillon à droite de la maison. La boite à clé est située à gauche dans l'entrée.</p>
         <p>La box internet ainsi que la box TV sont en libre accès, cependant merci de ne pas éteindre la wifi (elle sert pour l’appartement au dessus).</p>
@@ -135,7 +161,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card card-home">
         <h2><i class="fas fa-house-user"></i> Vie dans le logement</h2>
         <ul>
             <li><i class="fas fa-smoking"></i> <strong>Tabac :</strong> Le logement est non fumeur. Un cendrier est à votre disposition sur la terrasse </li>
@@ -150,17 +176,17 @@
         </ul>
     </div>
 
-    <div class="card">
+    <div class="card card-food">
         <h2><i class="fas fa-utensils"></i> Restauration & Courses</h2>
         <h3>Dans le vieux Terrasson</h3>
-        <a href="https://maps.app.goo.gl/YCQ22EMYfvSfK7NV6" target="_blank" class="btn">🍦 Glacier Manouvrier (€)</a>
-        <a href="https://maps.app.goo.gl/2QxiuSg5qFrxo93p6" target="_blank" class="btn">🍕 Bar le Drop (Pizzas €)</a>
-        <a href="https://maps.app.goo.gl/6XQg5KgRVu6hgsTQ8" target="_blank" class="btn">🥗 Banana ‘s Kafé (€€)</a>
-        <a href="https://maps.app.goo.gl/Nc1fZCvUJ85u8zgb9" target="_blank" class="btn">☕ Le café 10 (€€)</a>
-        <a href="https://maps.app.goo.gl/eGB92hCtdF9n8rvy6" target="_blank" class="btn">🍴 Le Petit bonheur (€€)</a>
-        <a href="https://maps.app.goo.gl/KzFofVdq4PEA2Yrm8" target="_blank" class="btn">🍴 Les Agapes (€€€)</a>
-        <a href="https://maps.app.goo.gl/A9wkYrsd7ZTYPaF98" target="_blank" class="btn">🍴 Le Moulin de l’imaginaire (€€€)</a>
-        <a href="https://maps.app.goo.gl/Ld2EVZZktvedvxbU8" target="_blank" class="btn">🍴La Mandragore (€€€€)</a>
+        <a href="#" target="_blank" class="btn">🍦 Glacier Manouvrier (€)</a>
+        <a href="#" target="_blank" class="btn">🍕 Bar le Drop (Pizzas €)</a>
+        <a href="#" target="_blank" class="btn">🥗 Banana ‘s Kafé (€€)</a>
+        <a href="#" target="_blank" class="btn">☕ Le café 10 (€€)</a>
+        <a href="#" target="_blank" class="btn">🍴 Le Petit bonheur (€€)</a>
+        <a href="#" target="_blank" class="btn">🍴 Les Agapes (€€€)</a>
+        <a href="#" target="_blank" class="btn">🍴 Le Moulin de l’imaginaire (€€€)</a>
+        <a href="#" target="_blank" class="btn">🍴La Mandragore (€€€€)</a>
 
         <h3>Mes suggestions aux alentours</h3>
         <a href="https://www.latabledejean24.com/" target="_blank" class="btn">🍴 La table de Jean (€€€) : 7,7km</a>
@@ -170,17 +196,17 @@
         <h3>🛒 Vos courses</h3>
         <p><strong>Direction Périgueux :</strong> Intermarché, Aldi<br>
         <strong>Direction Brive :</strong> Leclerc, Lidl, Auchan</p>
-        <a href="https://maps.app.goo.gl/WKyDCMwTzbJbb3K49" target="_blank" class="btn">🥖 La tourte d’antan (Pain 24h/24)</a>
-        <a href="https://maps.app.goo.gl/oNsrNjqKaWcSEFjR8" target="_blank" class="btn">🥩 Boucherie Flour </a>
-        <a href="https://maps.app.goo.gl/jWmh2x1K2Fffy9Pc6" target="_blank" class="btn">🧀 L’atelier des fromages</a>
+        <a href="#" target="_blank" class="btn">🥖 La tourte d’antan (Pain 24h/24)</a>
+        <a href="#" target="_blank" class="btn">🥩 Boucherie Flour </a>
+        <a href="#" target="_blank" class="btn">🧀 L’atelier des fromages</a>
     </div>
 
-    <div class="card">
+    <div class="card card-leisure">
         <h2><i class="fas fa-map-marked-alt"></i> À faire à Terrasson</h2>
         <a href="https://www.jardins-imaginaire.com/" target="_blank" class="btn">🌳 Jardins de l’imaginaire</a>
         <a href="https://www.gabare-terrasson.com/" target="_blank" class="btn">⛵ Visite en gabarre</a>
         <a href="https://www.bovetti.com/fr/" target="_blank" class="btn">🍫 Musée du Chocolat Bovetti</a>
-        <a href="https://www.cinepassion-dordogne.com/" target="_blank" class="btn">🎬 Ciné Roc</a>
+        <a href="#" target="_blank" class="btn">🎬 Ciné Roc</a>
 
         <h3>📅 Programme de l'été 2026</h3>
         <div class="agenda-box">
@@ -195,10 +221,10 @@
         <p><strong>Canoë :</strong> Montignac, St Léon sur Vézère, La Roque Gageac.</p>
         <a href="https://lascaux.fr/" target="_blank" class="btn">🦴 Grotte de Lascaux (20min)</a>
         <a href="https://parc-thot.fr/fr/" class="btn">🦌 Parc du Thot - Thonac (30min)</a>
-        <a href="https://chateau-hautefort.com/" target="_blank" class="btn">🏘️ Château de Hautefort (35min)</a>
-        <a href="https://www.vallee-dordogne.com/la-vallee-de-la-dordogne/villes-et-villages/collonges-la-rouge" class="btn">🏰 Collonges-la-Rouge (40min)</a>
+        <a href="https://chateau-hautefort.com/" target="_blank" class="btn">🏰 Château de Hautefort (35min)</a>
+        <a href="https://www.vallee-dordogne.com/la-vallee-de-la-dordogne/villes-et-villages/collonges-la-rouge" class="btn">🏘️ Collonges-la-Rouge (40min)</a>
         <a href="#" target="_blank" class="btn">🗿 Villages troglodytes (45min)</a>
-        <a href="#" target="_blank" class="btn">🐒 Rocamadour/forêt des singes (1h)</a>
+        <a href="#" target="_blank" class="btn">🐒 Rocamadour (1h)</a>
         <a href="https://www.guide-du-perigord.com/fr/experiences/culturelle/article-visite-brantome-venise-perigord-426.html" class="btn">🎭 Brantôme (1h15)</a>
     </div>
 
