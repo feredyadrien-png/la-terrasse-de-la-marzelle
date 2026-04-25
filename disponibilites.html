@@ -17,7 +17,7 @@
     .nav-btn:disabled { background:var(--stone-light); color:var(--grey); cursor:default; }
     .nav-label { font-size:13px; color:var(--text-light); text-align:center; }
     .cal-wrapper { display:flex; gap:24px; flex-wrap:wrap; }
-    .cal-month { flex:1; min-width:220px; max-width:340px; } @media (max-width:600px) { .cal-month { min-width:100%; max-width:100%; } }
+    .cal-month { flex:1; min-width:220px; max-width:340px; }
     .cal-month.hidden { display:none; }
     .cal-header { font-size:15px; font-weight:700; color:var(--dark); margin-bottom:12px; text-transform:capitalize; }
     .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; }
@@ -31,6 +31,10 @@
     .legend-dot { width:14px; height:14px; border-radius:2px; flex-shrink:0; }
     .dot-free { background:#d4edda; } .dot-occupied { background:#f5c6cb; } .dot-past { background:var(--stone-light); }
     .update-note { margin-top:12px; font-size:11px; color:var(--text-light); font-style:italic; }
+    @media (max-width:600px) {
+      .cal-month { min-width:100%; max-width:100%; }
+      .cal-wrapper { gap:0; }
+    }
   </style>
 </head>
 <body data-lang="fr" id="dispo-body">
