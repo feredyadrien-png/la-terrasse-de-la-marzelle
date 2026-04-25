@@ -407,17 +407,31 @@
   </section>
   
   <!-- DISPONIBILITES -->
-<section class="dispo-section" style="background:var(--cream-mid);padding:80px 5vw;">
+<section class="dispo-section" style="background:var(--cream-mid); padding:80px 5vw;">
   <p class="section-label fr">Calendrier</p>
   <p class="section-label en">Availability</p>
   <h2 class="section-title fr">Vérifiez les <em>disponibilités</em></h2>
   <h2 class="section-title en">Check <em>availability</em></h2>
+  
   <iframe
     src="disponibilites.html"
-    style="width:100%;border:none;min-height:420px;margin-top:16px;"
+    style="width:100%; border:none; min-height:500px; transition: height 0.3s ease; margin-top:16px;"
     id="dispo-frame"
     scrolling="no">
   </iframe>
+
+  <script>
+    // Ce script écoute le message envoyé par l'agenda pour ajuster la hauteur automatiquement
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.dispoHeight) {
+        var frame = document.getElementById('dispo-frame');
+        if (frame) {
+          // On ajoute 20px de marge pour être sûr que rien n'est coupé
+          frame.style.height = (e.data.dispoHeight + 20) + 'px';
+        }
+      }
+    }, false);
+  </script>
 </section>
 
   <!-- AVIS -->
