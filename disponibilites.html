@@ -73,12 +73,8 @@
       const visible=Array.from(months).slice(p*NB_VIS,(p+1)*NB_VIS);
       const labels=visible.map(m=>m.querySelector('.cal-header .'+lang).textContent);
       document.getElementById('nav-label').textContent=labels.join(' - ');
-      try{window.parent.postMessage({dispoHeight:document.body.scrollHeight},'*');}catch(e){}
     }
     function navigate(dir){const np=page+dir;if(np>=0&&np<NB_PAGES)showPage(np);}
-    function applyLang(lang){document.getElementById('dispo-body').dataset.lang=lang;showPage(page);}
-    try{applyLang(window.parent.document.body.dataset.lang||'fr');}catch(e){showPage(0);}
-    window.addEventListener('message',e=>{if(e.data&&e.data.lang)applyLang(e.data.lang);});
     window.addEventListener('load',()=>showPage(0));
   </script>
 </body>
