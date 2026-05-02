@@ -22,8 +22,6 @@
             --gold: #c5a447;
             --text: #4a4540;
             --text-light: #8e857d;
-            
-            /* Nuances par catégories */
             --cat-blue: #5d7a8c;
             --cat-green: #5a7065;
             --cat-red: #a66d5b;
@@ -31,16 +29,59 @@
         }
 
         body { font-family: 'Lato', sans-serif; background: var(--cream-bg); color: var(--text); margin: 0; padding: 0; line-height: 1.6; }
-        
+
+        /* LANG SWITCHER */
+        .lang-bar {
+            position: fixed;
+            top: 0; right: 0;
+            z-index: 1000;
+            padding: 10px 16px;
+            display: flex;
+            gap: 6px;
+        }
+        .lang-btn {
+            background: rgba(58,53,48,0.8);
+            border: 1px solid rgba(197,164,71,0.4);
+            color: #f2ede4;
+            padding: 5px 13px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Lato', sans-serif;
+            letter-spacing: 0.08em;
+            transition: all 0.2s;
+            backdrop-filter: blur(6px);
+        }
+        .lang-btn.active, .lang-btn:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--dark-accent);
+        }
+        [data-lang="fr"] .en, [data-lang="en"] .fr { display: none; }
+
         .header { 
             background: white; 
-            padding: 60px 20px; 
+            padding: 60px 20px 50px; 
             text-align: center; 
             border-bottom: 1px solid var(--stone-light);
         }
-        
         h1 { font-family: 'Playfair Display', serif; font-size: 2.4rem; margin: 0; color: var(--sage-green); }
         .header p { letter-spacing: 3px; text-transform: uppercase; font-size: 0.85rem; margin-top: 15px; color: var(--stone-dark); }
+        .header-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--dark-accent);
+            color: #f2ede4;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+        .header-cta:hover { background: var(--sage-green); }
 
         .container { max-width: 750px; margin: 0 auto; padding: 20px; }
         
@@ -49,13 +90,12 @@
             border-radius: 15px; 
             padding: 25px; 
             margin-bottom: 35px; 
-            box-shadow: 0 8px 25px rgba(122, 107, 92, 0.1); 
+            box-shadow: 0 8px 25px rgba(122,107,92,0.1); 
             overflow: hidden;
-            border: 1px solid rgba(214, 204, 186, 0.3);
+            border: 1px solid rgba(214,204,186,0.3);
             border-left: 6px solid var(--stone);
         }
 
-        /* --- Couleurs par catégories --- */
         .card-arrival { border-left-color: var(--cat-blue); }
         .card-arrival h2 { color: var(--cat-blue); }
         .card-arrival .btn { border-color: #d1dbe1; color: var(--cat-blue); }
@@ -63,7 +103,6 @@
 
         .card-home { border-left-color: var(--cat-green); }
         .card-home h2 { color: var(--cat-green); }
-        /* Pas de boutons ici mais prêt au cas où */
 
         .card-food { border-left-color: var(--cat-red); }
         .card-food h2 { color: var(--cat-red); }
@@ -101,6 +140,7 @@
             transition: all 0.3s; 
             border: 1px solid;
             font-weight: bold;
+            color: inherit;
         }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         
@@ -117,157 +157,236 @@
         li i { position: absolute; left: 0; top: 4px; color: var(--gold); font-size: 1.1rem; }
         
         .agenda-box { background: var(--stone-light); padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid var(--gold); }
+        .agenda-box p { margin-bottom: 8px; }
         
         .card-depart { background: var(--dark-accent); color: white; text-align: center; padding: 40px 25px; border-left: none; }
         .card-depart h2 { color: var(--gold); border-color: rgba(255,255,255,0.1); }
         .card-depart p { color: rgba(255,255,255,0.8); }
+        .card-depart .header-cta { margin-top: 10px; }
 
         .footer { text-align: center; padding: 40px; color: var(--text-light); font-size: 0.9rem; }
     </style>
 </head>
-<body>
+<body data-lang="fr" id="livret-body">
+
+<!-- LANG SWITCHER -->
+<div class="lang-bar">
+    <button class="lang-btn active" onclick="setLang('fr')">🇫🇷 FR</button>
+    <button class="lang-btn" onclick="setLang('en')">🇬🇧 EN</button>
+</div>
 
 <div class="header">
-    <h1>🌿 BIENVENUE</h1>
+    <h1>🌿 <span class="fr">BIENVENUE</span><span class="en">WELCOME</span></h1>
     <p>La Terrasse de la Marzelle</p>
-    <a href="tel:+33699215499" class="btn-dark">
-        <span>📞</span>
-        <span class="fr">Appeler · 06 99 21 54 99</span>
-      </a>
+    <a href="tel:+33699215499" class="header-cta">
+        📞 <span class="fr">Appeler · 06 99 21 54 99</span>
+        <span class="en">Call · +33 6 99 21 54 99</span>
+    </a>
 </div>
 
 <div class="container">
 
+    <!-- ARRIVÉE & WIFI -->
     <div class="card card-arrival">
-    <h2><i class="fas fa-key"></i> Arrivée & Wifi</h2>
-    <p>L'accès à l'appartement se fait par le petit portillon à droite de la maison. La boite à clé est située à gauche dans l'entrée.</p>
+        <h2><i class="fas fa-key"></i> <span class="fr">Arrivée &amp; Wifi</span><span class="en">Arrival &amp; Wifi</span></h2>
 
-    <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-        <div style="flex: 1; min-width: 200px;">
-            <img src="Accés portillon.jpg" alt="Accès portillon" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        </div>
-        <div style="flex: 1; min-width: 200px;">
-            <img src="Boite à clé.jpg" alt="Boite à clé" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        </div>
-    </div>
+        <p class="fr">L'accès à l'appartement se fait par le petit portillon à droite de la maison. La boîte à clé est située à gauche dans l'entrée.</p>
+        <p class="en">Access to the apartment is through the small gate on the right side of the house. The key safe is located on the left in the entrance.</p>
 
-    <p>La box internet ainsi que la box TV sont en libre accès, cependant merci de ne pas éteindre la wifi (elle sert pour l’appartement au dessus).</p>
-    
-    <div class="wifi-box">
-        <i class="fas fa-wifi" style="color: var(--gold); font-size: 1.5rem; margin-bottom: 10px;"></i><br>
-        <strong>Réseau :</strong> Bbox-9EFEF330<br>
-        <strong>Code :</strong> TERRASSON
-    </div>
-</div>
+        <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:200px;">
+                <img src="Accés portillon.jpg" alt="Accès portillon" style="width:100%;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+            </div>
+            <div style="flex:1;min-width:200px;">
+                <img src="Boite à clé.jpg" alt="Boite à clé" style="width:100%;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+
+        <p class="fr">La box internet ainsi que la box TV sont en libre accès, cependant merci de ne pas éteindre la wifi (elle sert pour l'appartement au dessus).</p>
+        <p class="en">The internet box and TV box are freely accessible. Please do not switch off the wifi — it also serves the apartment upstairs.</p>
         
-        <h3>🚗 Stationnement (Gratuit)</h3>
-        <p>Concernant le parking, voici les places disponibles autour du logement :</p>
+        <div class="wifi-box">
+            <i class="fas fa-wifi" style="color:var(--gold);font-size:1.5rem;margin-bottom:10px;"></i><br>
+            <strong><span class="fr">Réseau</span><span class="en">Network</span> :</strong> Bbox-9EFEF330<br>
+            <strong><span class="fr">Code</span><span class="en">Password</span> :</strong> TERRASSON
+        </div>
+
+        <h3>🚗 <span class="fr">Stationnement (Gratuit)</span><span class="en">Parking (Free)</span></h3>
+        <p class="fr">Concernant le parking, voici les places disponibles autour du logement :</p>
+        <p class="en">Here are the available parking spots around the accommodation :</p>
         
-        <a href="https://maps.app.goo.gl/4Cx1aG8VGtfoPdAr5" target="_blank" class="btn">📍 1 – Places face à l’appartement</a>
+        <a href="https://maps.app.goo.gl/4Cx1aG8VGtfoPdAr5" target="_blank" class="btn">📍 1 – <span class="fr">Places face à l'appartement</span><span class="en">Spots in front of the apartment</span></a>
         <a href="https://maps.app.goo.gl/unNUHW2RN8j59MBs5" target="_blank" class="btn">📍 2 – Place de la Marzelle</a>
         <a href="https://maps.app.goo.gl/3UQN6qzM2jPDLdRJ6" target="_blank" class="btn">📍 3 – Parking rue de la Marzelle</a>
         <a href="https://maps.app.goo.gl/9W2sx2U8rKqxeyw46" target="_blank" class="btn">📍 4 – Parking place de Genouillac</a>
         
-        <div class="parking-map-container" style="margin-top: 20px; text-align: center; padding: 10px;">
-    <img src="Emplacements parking.PNG" 
-         alt="Plan de stationnement" 
-         style="width: 100%; max-width: 600px; height: auto; border: 2px solid var(--stone); border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: block; margin: 0 auto;">
-    
-    <p style="font-size:0.85rem; text-align:center; color:var(--stone-dark); margin-top:15px; font-style: italic;">
-        <span class="fr">📸 Référez-vous aux numéros et à la flèche "Vous êtes ici".</span>
-    </p>
+        <div class="parking-map-container" style="text-align:center;padding:10px;">
+            <img src="Emplacements parking.PNG" alt="Plan de stationnement" style="width:100%;max-width:600px;height:auto;border:2px solid var(--stone);border-radius:8px;box-shadow:0 4px 15px rgba(0,0,0,0.1);display:block;margin:0 auto;">
+            <p style="font-size:0.85rem;text-align:center;color:var(--stone-dark);margin-top:15px;font-style:italic;">
+                <span class="fr">📸 Référez-vous aux numéros et à la flèche "Vous êtes ici".</span>
+                <span class="en">📸 Refer to the numbers and the "You are here" arrow.</span>
+            </p>
         </div>
     </div>
 
+    <!-- VIE DANS LE LOGEMENT -->
     <div class="card card-home">
-        <h2><i class="fas fa-house-user"></i> Vie dans le logement</h2>
+        <h2><i class="fas fa-house-user"></i> <span class="fr">Vie dans le logement</span><span class="en">Living in the apartment</span></h2>
         <ul>
-            <li><i class="fas fa-smoking"></i> <strong>Tabac :</strong> Le logement est non fumeur. Un cendrier est à votre disposition sur la terrasse </li>
-            <li><i class="fas fa-recycle"></i> <strong>Déchets :</strong> Merci de faire le tri dans les bacs dans l’entrée (1 bac verre, 1 bac recyclable : papier, plastique, conserves) </li>
-            <li><i class="fas fa-bolt"></i> <strong>Électricité :</strong> Le tableau électrique se situe dans l’espace face à la salle de bain </li>
-            <li><i class="fas fa-shower"></i> <strong>Entretien :</strong> L’eau est très calcaire, un petit passage de raclette sur les parois de douche est fortement apprécié </li>
-            <li><i class="fas fa-tshirt"></i> <strong>Linge :</strong> Votre location comprend le ménage, les draps et le linge de toilette. Merci de respecter la propreté des lieux </li>
-            <li><i class="fas fa-utensils"></i> <strong>Épicerie :</strong> Pâtes, riz, huile, sel, charbon BBQ... sont à disposition. Merci de les remplacer si vous les finissez </li>
-            <li><i class="fas fa-fire"></i> <strong>Hiver :</strong> Bois, journaux et allume-feu sont dehors. N'hésitez pas à me demander pour l'allumage du poêle </li>
-            <li><i class="fas fa-chess-board"></i> <strong>Loisirs :</strong> Des jeux de société sont à votre disposition dans le meuble TV </li>
-            <li><i class="fas fa-lightbulb"></i> <strong>Extérieur :</strong> Le spot extérieur est solaire. Mettez le bouton (sous le spot) sur la position centrale et éteignez-le à votre départ </li>
+            <li><i class="fas fa-smoking"></i>
+                <strong><span class="fr">Tabac</span><span class="en">Smoking</span> :</strong>
+                <span class="fr"> Le logement est non fumeur. Un cendrier est à votre disposition sur la terrasse.</span>
+                <span class="en"> The apartment is non-smoking. An ashtray is available on the terrace.</span>
+            </li>
+            <li><i class="fas fa-recycle"></i>
+                <strong><span class="fr">Déchets</span><span class="en">Waste</span> :</strong>
+                <span class="fr"> Merci de faire le tri dans les bacs dans l'entrée (1 bac verre, 1 bac recyclable : papier, plastique, conserves).</span>
+                <span class="en"> Please sort your waste in the bins in the entrance (1 glass bin, 1 recycling bin: paper, plastic, tins).</span>
+            </li>
+            <li><i class="fas fa-bolt"></i>
+                <strong><span class="fr">Électricité</span><span class="en">Electricity</span> :</strong>
+                <span class="fr"> Le tableau électrique se situe dans l'espace face à la salle de bain.</span>
+                <span class="en"> The fuse box is located in the space opposite the bathroom.</span>
+            </li>
+            <li><i class="fas fa-shower"></i>
+                <strong><span class="fr">Entretien</span><span class="en">Maintenance</span> :</strong>
+                <span class="fr"> L'eau est très calcaire, un petit passage de raclette sur les parois de douche est fortement apprécié.</span>
+                <span class="en"> The water is very hard — a quick wipe of the shower walls with the squeegee is greatly appreciated.</span>
+            </li>
+            <li><i class="fas fa-tshirt"></i>
+                <strong><span class="fr">Linge</span><span class="en">Linen</span> :</strong>
+                <span class="fr"> Votre location comprend le ménage, les draps et le linge de toilette. Merci de respecter la propreté des lieux.</span>
+                <span class="en"> Your stay includes cleaning, bed linen and towels. Please keep the place clean and tidy.</span>
+            </li>
+            <li><i class="fas fa-utensils"></i>
+                <strong><span class="fr">Épicerie</span><span class="en">Pantry</span> :</strong>
+                <span class="fr"> Pâtes, riz, huile, sel, charbon BBQ... sont à disposition. Merci de les remplacer si vous les finissez.</span>
+                <span class="en"> Pasta, rice, oil, salt, BBQ charcoal... are available. Please replace them if you use them up.</span>
+            </li>
+            <li><i class="fas fa-fire"></i>
+                <strong><span class="fr">Hiver</span><span class="en">Winter</span> :</strong>
+                <span class="fr"> Bois, journaux et allume-feu sont dehors. N'hésitez pas à me demander pour l'allumage du poêle.</span>
+                <span class="en"> Wood, newspapers and firelighters are outside. Don't hesitate to ask me how to light the stove.</span>
+            </li>
+            <li><i class="fas fa-chess-board"></i>
+                <strong><span class="fr">Loisirs</span><span class="en">Leisure</span> :</strong>
+                <span class="fr"> Des jeux de société sont à votre disposition dans le meuble TV.</span>
+                <span class="en"> Board games are available in the TV cabinet.</span>
+            </li>
+            <li><i class="fas fa-lightbulb"></i>
+                <strong><span class="fr">Extérieur</span><span class="en">Outside</span> :</strong>
+                <span class="fr"> Le spot extérieur est solaire. Mettez le bouton (sous le spot) sur la position centrale et éteignez-le à votre départ.</span>
+                <span class="en"> The outdoor light is solar-powered. Set the button (under the light) to the middle position and switch it off when you leave.</span>
+            </li>
         </ul>
     </div>
 
+    <!-- RESTAURATION -->
     <div class="card card-food">
-        <h2><i class="fas fa-utensils"></i> Restauration & Courses</h2>
-        <h3>Dans le vieux Terrasson</h3>
+        <h2><i class="fas fa-utensils"></i> <span class="fr">Restauration &amp; Courses</span><span class="en">Restaurants &amp; Shopping</span></h2>
+
+        <h3><span class="fr">Dans le vieux Terrasson</span><span class="en">In the old town of Terrasson</span></h3>
         <a href="https://maps.app.goo.gl/YCQ22EMYfvSfK7NV6" target="_blank" class="btn">🍦 Glacier Manouvrier (€)</a>
-        <a href="https://maps.app.goo.gl/2QxiuSg5qFrxo93p6" target="_blank" class="btn">🍕 Bar le Drop (Pizzas €)</a>
-        <a href="https://maps.app.goo.gl/6XQg5KgRVu6hgsTQ8" target="_blank" class="btn">🥗 Banana ‘s Kafé (€€)</a>
+        <a href="https://maps.app.goo.gl/2QxiuSg5qFrxo93p6" target="_blank" class="btn">🍕 Bar le Drop (<span class="fr">Pizzas</span><span class="en">Pizzas</span> €)</a>
+        <a href="https://maps.app.goo.gl/6XQg5KgRVu6hgsTQ8" target="_blank" class="btn">🥗 Banana's Kafé (€€)</a>
         <a href="https://maps.app.goo.gl/Nc1fZCvUJ85u8zgb9" target="_blank" class="btn">☕ Le café 10 (€€)</a>
         <a href="https://maps.app.goo.gl/eGB92hCtdF9n8rvy6" target="_blank" class="btn">🍴 Le Petit bonheur (€€)</a>
         <a href="https://maps.app.goo.gl/KzFofVdq4PEA2Yrm8" target="_blank" class="btn">🍴 Les Agapes (€€€)</a>
-        <a href="https://maps.app.goo.gl/A9wkYrsd7ZTYPaF98" target="_blank" class="btn">🍴 Le Moulin de l’imaginaire (€€€)</a>
-        <a href="https://maps.app.goo.gl/Ld2EVZZktvedvxbU8" target="_blank" class="btn">🍴La Mandragore (€€€€)</a>
+        <a href="https://maps.app.goo.gl/A9wkYrsd7ZTYPaF98" target="_blank" class="btn">🍴 Le Moulin de l'imaginaire (€€€)</a>
+        <a href="https://maps.app.goo.gl/Ld2EVZZktvedvxbU8" target="_blank" class="btn">🍴 La Mandragore (€€€€)</a>
 
-        <h3>Mes suggestions aux alentours</h3>
+        <h3><span class="fr">Mes suggestions aux alentours</span><span class="en">My suggestions nearby</span></h3>
         <a href="https://www.latabledejean24.com/" target="_blank" class="btn">🍴 La table de Jean (€€€) : 7,7km</a>
-        <a href="https://www.tripadvisor.fr/Restaurant_Review-g1931801-d2367010-Reviews-L_art_des_mets-La_Feuillade_Dordogne_Nouvelle_Aquitaine.html" target="_blank" class="btn">🍴 L’art des Mets (€€€) : 9km</a>
+        <a href="https://www.tripadvisor.fr/Restaurant_Review-g1931801-d2367010-Reviews-L_art_des_mets-La_Feuillade_Dordogne_Nouvelle_Aquitaine.html" target="_blank" class="btn">🍴 L'art des Mets (€€€) : 9km</a>
         <a href="https://auberge-le-grand-coderc.fr/" target="_blank" class="btn">🦆 Ferme du grand Coderc (€€€) : 20km</a>
 
-        <h3>🛒 Vos courses</h3>
-        <p><strong>Direction Périgueux :</strong> Intermarché, Aldi<br>
-        <strong>Direction Brive :</strong> Leclerc, Lidl, Auchan</p>
-        <a href="https://maps.app.goo.gl/WKyDCMwTzbJbb3K49" target="_blank" class="btn">🥖 La tourte d’antan (Pain 24h/24)</a>
-        <a href="https://maps.app.goo.gl/oNsrNjqKaWcSEFjR8" target="_blank" class="btn">🥩 Boucherie Flour </a>
-        <a href="https://maps.app.goo.gl/jWmh2x1K2Fffy9Pc6" target="_blank" class="btn">🧀 L’atelier des fromages</a>
+        <h3>🛒 <span class="fr">Vos courses</span><span class="en">Grocery shopping</span></h3>
+        <p class="fr"><strong>Direction Périgueux :</strong> Intermarché, Aldi<br><strong>Direction Brive :</strong> Leclerc, Lidl, Auchan</p>
+        <p class="en"><strong>Towards Périgueux :</strong> Intermarché, Aldi<br><strong>Towards Brive :</strong> Leclerc, Lidl, Auchan</p>
+        <a href="https://maps.app.goo.gl/WKyDCMwTzbJbb3K49" target="_blank" class="btn">🥖 La tourte d'antan (<span class="fr">Pain 24h/24</span><span class="en">Bread 24/7</span>)</a>
+        <a href="https://maps.app.goo.gl/oNsrNjqKaWcSEFjR8" target="_blank" class="btn">🥩 Boucherie Flour</a>
+        <a href="https://maps.app.goo.gl/jWmh2x1K2Fffy9Pc6" target="_blank" class="btn">🧀 L'atelier des fromages</a>
         <a href="https://maps.app.goo.gl/fJE3pW4MKW96rNBG6" target="_blank" class="btn">🍅 Les jardins de Coly</a>
     </div>
 
+    <!-- LOISIRS -->
     <div class="card card-leisure">
-        <h2><i class="fas fa-map-marked-alt"></i> À faire à Terrasson</h2>
-        <a href="https://www.jardins-imaginaire.com/" target="_blank" class="btn">🌳 Jardins de l’imaginaire</a>
-        <a href="https://www.gabare-terrasson.com/" target="_blank" class="btn">⛵ Visite en gabarre</a>
-        <a href="https://www.bovetti.com/fr/" target="_blank" class="btn">🍫 Musée du Chocolat Bovetti</a>
+        <h2><i class="fas fa-map-marked-alt"></i> <span class="fr">À faire à Terrasson</span><span class="en">Things to do in Terrasson</span></h2>
+        <a href="https://www.jardins-imaginaire.com/" target="_blank" class="btn">🌳 Jardins de l'imaginaire</a>
+        <a href="https://www.gabare-terrasson.com/" target="_blank" class="btn">⛵ <span class="fr">Visite en gabarre</span><span class="en">Gabarre river cruise</span></a>
+        <a href="https://www.bovetti.com/fr/" target="_blank" class="btn">🍫 <span class="fr">Musée du Chocolat Bovetti</span><span class="en">Bovetti Chocolate Museum</span></a>
         <a href="https://www.cinepassion-dordogne.com/" target="_blank" class="btn">🎬 Ciné Roc</a>
 
-        <h3>📅 Programme de l'été 2026</h3>
+        <h3>📅 <span class="fr">Programme de l'été 2026</span><span class="en">Summer 2026 programme</span></h3>
         <div class="agenda-box">
-            <p><strong>Mardi soir :</strong> Entrainement aux joutes sur la Vézère 🚣</p>
-            <p><strong>Mercredi soir :</strong> « Mercredis du bassin » (5 concerts gratuits) 🎸</p>
-            <p><strong>Jeudi matin :</strong> Marché hebdomadaire 🥖</p>
-            <p><strong>Jeudi soir :</strong> Spectacle de feu ou mise en lumière 🎆</p>
-            <p><strong>Vendredi soir :</strong> « Les Guingoiseries » (marché artisans) 🎨</p>
+            <p class="fr"><strong>Mardi soir :</strong> Entraînement aux joutes sur la Vézère 🚣</p>
+            <p class="en"><strong>Tuesday evening :</strong> Jousting training on the Vézère river 🚣</p>
+
+            <p class="fr"><strong>Mercredi soir :</strong> « Mercredis du bassin » (5 concerts gratuits) 🎸</p>
+            <p class="en"><strong>Wednesday evening :</strong> "Mercredis du bassin" (5 free concerts) 🎸</p>
+
+            <p class="fr"><strong>Jeudi matin :</strong> Marché hebdomadaire 🥖</p>
+            <p class="en"><strong>Thursday morning :</strong> Weekly market 🥖</p>
+
+            <p class="fr"><strong>Jeudi soir :</strong> Spectacle de feu ou mise en lumière 🎆</p>
+            <p class="en"><strong>Thursday evening :</strong> Fire show or light display 🎆</p>
+
+            <p class="fr"><strong>Vendredi soir :</strong> « Les Guingoiseries » (marché artisans) 🎨</p>
+            <p class="en"><strong>Friday evening :</strong> "Les Guingoiseries" (artisan market) 🎨</p>
         </div>
         
-        <h3> Activités Alentours</h3>
-        <a href="https://www.dordogne-perigord-tourisme.fr/preparer-son-sejour/bouger/canoe/" target="_blank" class="btn"> 🛶Canoë(Montignac, St Léon, La roque Gageac (20min)</a>
-        <a href="https://lascaux.fr/" target="_blank" class="btn">🦴 Grotte de Lascaux (20min)</a>
-        <a href="https://parc-thot.fr/fr/" target="_blank" class="btn">🦌 Parc du Thot - Thonac (30min)</a>
-        <a href="https://chateau-hautefort.com/" target="_blank" class="btn">🏰 Château de Hautefort (35min)</a>
-        <a href="https://www.vallee-dordogne.com/la-vallee-de-la-dordogne/villes-et-villages/collonges-la-rouge" target="_blank" class="btn">🏘️ Collonges-la-Rouge (40min)</a>
-        <a href="https://www.perigord.com/liste/sites-troglodytiques/" target="_blank" class="btn">🗿 Villages troglodytes (45min)</a>
-        <a href="https://www.rocamadour.com/commune-de-rocamadour/" target="_blank" class="btn">🐒 Rocamadour (1h)</a>
-        <a href="https://www.guide-du-perigord.com/fr/experiences/culturelle/article-visite-brantome-venise-perigord-426.html" target="_blank" class="btn">🎭 Brantôme (1h15)</a>
+        <h3><span class="fr">Activités alentours</span><span class="en">Activities nearby</span></h3>
+        <a href="https://www.dordogne-perigord-tourisme.fr/preparer-son-sejour/bouger/canoe/" target="_blank" class="btn">🛶 <span class="fr">Canoë — Montignac, St Léon, La Roque Gageac (20 min)</span><span class="en">Canoe — Montignac, St Léon, La Roque Gageac (20 min)</span></a>
+        <a href="https://lascaux.fr/" target="_blank" class="btn">🦴 <span class="fr">Grotte de Lascaux (20 min)</span><span class="en">Lascaux Cave (20 min)</span></a>
+        <a href="https://parc-thot.fr/fr/" target="_blank" class="btn">🦌 <span class="fr">Parc du Thot — Thonac (30 min)</span><span class="en">Parc du Thot — Thonac (30 min)</span></a>
+        <a href="https://chateau-hautefort.com/" target="_blank" class="btn">🏰 <span class="fr">Château de Hautefort (35 min)</span><span class="en">Château de Hautefort (35 min)</span></a>
+        <a href="https://www.vallee-dordogne.com/la-vallee-de-la-dordogne/villes-et-villages/collonges-la-rouge" target="_blank" class="btn">🏘️ <span class="fr">Collonges-la-Rouge (40 min)</span><span class="en">Collonges-la-Rouge (40 min)</span></a>
+        <a href="https://www.perigord.com/liste/sites-troglodytiques/" target="_blank" class="btn">🗿 <span class="fr">Villages troglodytes (45 min)</span><span class="en">Troglodyte villages (45 min)</span></a>
+        <a href="https://www.rocamadour.com/commune-de-rocamadour/" target="_blank" class="btn">🐒 <span class="fr">Rocamadour (1h)</span><span class="en">Rocamadour (1h)</span></a>
+        <a href="https://www.guide-du-perigord.com/fr/experiences/culturelle/article-visite-brantome-venise-perigord-426.html" target="_blank" class="btn">🎭 <span class="fr">Brantôme (1h15)</span><span class="en">Brantôme (1h15)</span></a>
     </div>
 
+    <!-- DÉPART -->
     <div class="card card-depart">
-        <h2>👋 Votre Départ</h2>
-        <p>Merci de rassembler le linge utilisé (draps, serviettes, torchons) et de remettre chaque élément à sa place (électroménager, vaisselle, BBQ etc).</p>
-        <p>Des accidents peuvent arriver : si quelque chose est cassé, merci de me prévenir pour le remplacement avant les prochains locataires 🤝</p>
-        <p><strong>Si je suis absent :</strong> Laissez les clés dans la boîte à clés et brouillez le code 🔑</p>
+        <h2>👋 <span class="fr">Votre Départ</span><span class="en">Your Departure</span></h2>
+        <p class="fr">Merci de rassembler le linge utilisé (draps, serviettes, torchons) et de remettre chaque élément à sa place (électroménager, vaisselle, BBQ etc).</p>
+        <p class="en">Please gather all used linen (sheets, towels, tea towels) and put everything back in its place (appliances, crockery, BBQ, etc).</p>
+
+        <p class="fr">Des accidents peuvent arriver : si quelque chose est cassé, merci de me prévenir pour le remplacement avant les prochains locataires 🤝</p>
+        <p class="en">Accidents happen — if something is broken, please let me know so it can be replaced before the next guests arrive 🤝</p>
+
+        <p class="fr"><strong>Si je suis absent :</strong> Laissez les clés dans la boîte à clés et brouillez le code 🔑</p>
+        <p class="en"><strong>If I'm not around :</strong> Leave the keys in the key safe and scramble the code 🔑</p>
         
-        <p style="font-family: 'Playfair Display'; font-size: 1.4rem; margin-top: 30px; color: var(--gold);">
-            J’espère que vous avez passé un beau séjour. Au plaisir de vous accueillir de nouveau !
+        <p style="font-family:'Playfair Display';font-size:1.4rem;margin-top:30px;color:var(--gold);">
+            <span class="fr">J'espère que vous avez passé un beau séjour. Au plaisir de vous accueillir de nouveau !</span>
+            <span class="en">I hope you had a wonderful stay. I'd be delighted to welcome you back!</span>
         </p>
-        <p style="font-size: 1.2rem; font-weight: bold; margin-top: 10px;">Adrien</p>
-        <div class="cta-btns">
-      <a href="tel:+33699215499" class="btn-dark">
-        <span>📞</span>
-        <span class="fr">Appeler · 06 99 21 54 99</span>
-      </a>
+        <p style="font-size:1.2rem;font-weight:bold;margin-top:10px;color:white;">Adrien</p>
+        <a href="tel:+33699215499" class="header-cta">
+            📞 <span class="fr">Appeler · 06 99 21 54 99</span>
+            <span class="en">Call · +33 6 99 21 54 99</span>
+        </a>
     </div>
 
-    <div class="footer">
-        <p>© LA TERRASSE DE LA MARZELLE - TERRASSON</p>
-    </div>
 </div>
+
+<div class="footer">
+    <p>© LA TERRASSE DE LA MARZELLE — TERRASSON</p>
+</div>
+
+<script>
+    function setLang(lang) {
+        document.getElementById('livret-body').dataset.lang = lang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+    }
+    // Détection automatique
+    (function() {
+        const lang = navigator.language || navigator.userLanguage || 'fr';
+        if (lang.startsWith('en')) setLang('en');
+    })();
+</script>
 
 </body>
 </html>
